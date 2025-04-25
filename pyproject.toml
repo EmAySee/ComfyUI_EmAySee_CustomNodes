@@ -1,0 +1,14 @@
+[project]
+name = "emaysee_customnodes"
+description = ""
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/EmAySee/ComfyUI_EmAySee_CustomNodes"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI_EmAySee_CustomNodes"
+Icon = ""
