@@ -1,12 +1,12 @@
 [project]
 name = "ComfyUI_EmAySee_CustomNodes"
-description = "Collection of nodes i've made to better my life in comfy."
+description = "**FIXED DL** Collection of nodes i've made to better my life in comfy.  There is an LLM Ooobagabooga interface, text file saver, multiple randominzers for integers and string selections, and many other nodes i created. CheckboxFloatNode.py, DateTimeStringNode.py, DynamicStringSelectorNode.py, HostPinger.py, IntegerStringSelectorNode.py, IntegerStringSelectorNodeDynamic.py, multiplier_node.py, ProbabilityStringSelectorNode.py, RandomIntegerFromListNode.py, RandomIntegerFromTogglesNode_PremadeLabels.py, RandomIntFromList.py, RandomIntFromList2.py, RandomStringSelectorNode.py, RandomStringSelectorNode2.py, RandomStringSelectorNodeFourChoice.py, RandomStringSelectorNodeThreeChoice.py, RemoveDuplicateCSV.py, RepaintKSampler.py, SaveImage.py, SaveTextToFile.py, StringPoseSelectorNode.py, StringTupleInputNode.py, SubmitToOobaboogaAPI.py, ToggleIntNode.py, VarTextReplacer.py, VeryUniqueStringSelectorNode.py"
+
 version = "2"
 license = {file = "LICENSE"}
 
 [project.urls]
 Repository = "https://github.com/EmAySee/ComfyUI_EmAySee_CustomNodes"
-#  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
 PublisherId = "emaysee"
