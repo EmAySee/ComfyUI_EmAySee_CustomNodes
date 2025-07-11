@@ -1,0 +1,45 @@
+EmAySee Submit to Oobabooga API Node With API Key
+
+Brief Explanation
+
+This node allows your ComfyUI workflow to send text prompts to a text-generation-webui (oobabooga) instance running in API mode, and receive text responses back. It includes options for an API key, various text generation parameters (like creativity and length), and an API endpoint to specify where your oobabooga instance is located. The primary goal is to integrate a large language model (LLM) into your ComfyUI workflows, enabling dynamic text generation for tasks like creating prompts for image models or generating narrative content.
+
+How to Use
+
+    Locate the Node: You've got the node on your workflow. Now, let's configure its inputs.
+
+    Configure Required Inputs:
+
+        apikey_input: Enter the API key that you've configured in your oobabooga instance. This is essential for authentication.
+
+        text_input: Connect a STRING node here containing the prompt you want the oobabooga LLM to process (e.g., "Write a short story about a brave knight and a dragon.").
+
+        api_endpoint: Specify the full URL of your oobabooga's /v1/completions API endpoint. If oobabooga is running on the same machine, it's often http://127.0.0.1:5000/v1/completions. Adjust this if your oobabooga is on a different IP address or port.
+
+    Adjust Generation Parameters (Optional):
+
+        temperature: Higher values (e.g., 0.7-1.0) make the generated text more random and creative; lower values (e.g., 0.1-0.5) make it more focused and predictable.
+
+        top_p, top_k, typical_p: These advanced parameters control the diversity and quality of the generated text. Adjust them to fine-tune the output to your needs.
+
+        repetition_penalty: Increase this value to make the LLM less likely to repeat words or phrases.
+
+        max_new_tokens: Select the maximum length of the text response you want the LLM to generate.
+
+        seed: For reproducible results, enter a specific number. Use -1 for a random output each time.
+
+        delay_seconds: Adds a pause before sending the request. Useful if you need to control the speed of requests to your oobabooga instance.
+
+        show_api_response: Check this box if you want to see the raw response from oobabooga printed in your ComfyUI console, which can be helpful for debugging.
+
+    Utilize the Output:
+
+        The api_response output will provide the generated text as a STRING. You can connect this to other ComfyUI nodes, such as:
+
+            A "Primitive Node" of type STRING to simply view the output text.
+
+            A "CLIP Text Encode" node to use the generated text as a positive or negative prompt for an image generation model.
+
+            Any other node that accepts a STRING input.
+
+By connecting this node in your workflow, you can dynamically generate text from your oobabooga LLM and integrate it seamlessly into your creative ComfyUI processes.
