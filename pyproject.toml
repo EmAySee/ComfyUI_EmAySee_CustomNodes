@@ -1,8 +1,7 @@
 [project]
 name = "ComfyUI_EmAySee_CustomNodes"
-description = "**FIXED DL** Collection of nodes i've made to better my life in comfy.  There is an LLM Ooobagabooga interface, text file saver, multiple randominzers for integers and string selections, and many other nodes i created. CheckboxFloatNode.py, DateTimeStringNode.py, DynamicStringSelectorNode.py, HostPinger.py, IntegerStringSelectorNode.py, IntegerStringSelectorNodeDynamic.py, multiplier_node.py, ProbabilityStringSelectorNode.py, RandomIntegerFromListNode.py, RandomIntegerFromTogglesNode_PremadeLabels.py, RandomIntFromList.py, RandomIntFromList2.py, RandomStringSelectorNode.py, RandomStringSelectorNode2.py, RandomStringSelectorNodeFourChoice.py, RandomStringSelectorNodeThreeChoice.py, RemoveDuplicateCSV.py, RepaintKSampler.py, SaveImage.py, SaveTextToFile.py, StringPoseSelectorNode.py, StringTupleInputNode.py, SubmitToOobaboogaAPI.py, ToggleIntNode.py, VarTextReplacer.py, VeryUniqueStringSelectorNode.py"
-
-version = "2"
+description = "Lots of nodes with useful purposes, Oobabooga interface with and w/o api key, lora analyzer, multiple math functions nodes, custom image saver, passthrus, multiple string manipulators, host pinger, and the Lora MetaData dumper via lora path (Great for that what settings and model did they use to make this lora question."
+version = "3"
 license = {file = "LICENSE"}
 
 [project.urls]
