@@ -2,7 +2,7 @@
 name = "ComfyUI_EmAySee_CustomNodes"
 description = "**FIXED DL** Collection of nodes i've made to better my life in comfy.  There is an LLM Ooobagabooga interface, text file saver, multiple randominzers for integers and string selections, and many other nodes I created. CheckboxFloatNode, DateTimeStringNode, DynamicStringSelectorNode, HostPinger, IntegerStringSelectorNode, IntegerStringSelectorNodeDynamic, multiplier_node, ProbabilityStringSelectorNode, RandomIntegerFromListNode, RandomIntegerFromTogglesNode_PremadeLabels, RandomIntFromList, RandomIntFromList2, RandomStringSelectorNode, RandomStringSelectorNode2, RandomStringSelectorNodeFourChoice, RandomStringSelectorNodeThreeChoice, RemoveDuplicateCSV, RepaintKSampler, SaveImage, SaveTextToFile, StringPoseSelectorNode, StringTupleInputNode, SubmitToOobaboogaAPI, ToggleIntNode, VarTextReplacer, VeryUniqueStringSelectorNode"
 
-version = "3.1.0"
+version = "3.1.1"
 license = {file = "LICENSE"}
 
 [project.urls]
