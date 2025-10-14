@@ -35,6 +35,7 @@ class EmAySee_MathExpression:
     FUNCTION = "evaluate"
     CATEGORY = "EmAySee"
 
+
     def evaluate(self, expression, w, h):
         safe_env = {
             'w': w,
