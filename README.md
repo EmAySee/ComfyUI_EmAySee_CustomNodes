@@ -1,205 +1,200 @@
-ComfyUI_EmAySee_CustomNodes
-This repository contains a collection of custom nodes for ComfyUI developed by EmAySee.
+# **EmAySee Custom Nodes for ComfyUI**
 
-**Currently AI Described these for me.. i'll update the descriptions later.
+A specialized collection of ComfyUI custom nodes designed to solve specific workflow bottlenecks, improve organization, and bridge the gap between AI generation and logic-based automation.
 
-The custom nodes should now appear in the ComfyUI add node menu under their respective categories (mostly starting with "EmAySee_").
-Nodes Included
-Here is a brief description of each custom node in this repository:
+## **🖼️ Image & Vision Processing**
 
-**EmAySee_CheckboxFloatNode.py**
+### **EmAySee Repaint KSampler**
 
-	•	Node Title: EmAySee Checkbox Float
+A specialized KSampler designed for inpainting and repainting tasks. It intelligently handles image masks by inverting them (mapping white to "keep" and black to "change") and combining original latents with initial noise to provide a more stable starting point for the sampling process.
 
-	•	Category: EmAySee_Utils
+### **Save Image (EmAySee)**
 
-	•	Description: Likely provides a boolean input (checkbox) that controls a float output, possibly switching between two float values or enabling/disabling a float value based on the checkbox state.
+An advanced image saving node with deep customization. It allows for complex filename construction using prefixes, postfixes, and timestamps (YYYYMMDDHHMMSS). It also ensures that EXTRA\_PNGINFO and metadata are correctly preserved in the final output.
 
-**EmAySee_DateTimeStringNode.py**
+### **EmAySee Qwen Pixel Aligner**
 
-	•	Node Title: EmAySee Date Time String
+Designed specifically for VLM (Vision Language Model) workflows like Qwen-VL. It intelligently resizes images to a target longest edge (784px–2240px) while snapping the final dimensions to a 112px grid. This ensures maximum compatibility and performance without distorting aspect ratios.
 
-	•	Category: EmAySee_Utils
+### **EmAySee Gemini Image Gen**
 
-	•	Description: Generates a string representing the current date and time. Useful for timestamping outputs or incorporating time information into prompts.
+A powerful integration node that brings Google's **Gemini 2.0 Flash** and **Imagen 3** models directly into your workflow. It handles prompt execution and batch generation, allowing you to use high-end cloud-based generation alongside local models.
 
-**EmAySee_DynamicStringSelectorNode.py**
+### **EmAySee Conditional Resize**
 
-	•	Node Title: EmAySee Dynamic String Selector
+A logic-gated upscaler. It only triggers a resize if the input image's longest side is smaller than your defined threshold, preventing redundant upscaling and saving processing time.
 
-	•	Category: EmAySee_String
+### **EmAySee Pad Image For Outpainting**
 
-	•	Description: Allows selection from a list of strings that can potentially be dynamically generated or input, offering more flexibility than a fixed dropdown.
+Adds padding to the Left, Top, Right, or Bottom of an image and generates a corresponding mask for the padded areas. Perfect for outpainting workflows that require specific canvas expansion.
 
-**EmAySee_HostPinger.py**
+### **EmAySee Aspect Ratio Calculator**
 
-	•	Node Title: EmAySee Host Pinger
+Eliminates guesswork when resizing. Provide an image and a target height, and the node outputs the precise width required to maintain the original aspect ratio perfectly.
 
-	•	Category: EmAySee_Network
+### **EmAySee Image Get Size**
 
-	•	Description: Pings a specified hostname or IP address and outputs an integer (1 for reachable, 0 for unreachable). Useful for conditional workflows based on network status.
+A simple utility that extracts and outputs the Width and Height of an input image as integers.
 
-**EmAySee_IntegerStringSelectorNode.py**
+### **EmAySee Dimension Swapper**
 
-	•	Node Title: EmAySee Integer String Selector
+A streamlined utility for switching between Portrait and Landscape orientations. It allows you to swap Width and Height values with a single toggle.
 
-	•	Category: EmAySee_String
+### **EmAySee Image Preview & Passthrough**
 
-	•	Description: Selects a string output based on an integer input, likely using the integer value to index into a list of predefined strings.
+* **Image Preview Passthrough:** Displays a high-speed temp preview of the image at any point in your workflow without stopping the execution chain.  
+* **Image Passthrough:** A standard utility to route image data while allowing you to rename labels for cleaner organization.
 
-**EmAySee_IntegerStringSelectorNodeDynamic.py**
+## **🎭 Masking & Detailer Tools**
 
-	•	Node Title: EmAySee Integer String Selector Dynamic
+### **Multi Mask to BBOX**
 
-	•	Category: EmAySee_String
+Extracts a combined bounding box (X, Y, Width, Height) from up to 10 different mask inputs. It finds the outer bounds of all visible areas, allowing you to crop or detail multiple masked regions simultaneously.
 
-	•	Description: Similar to EmAySee_IntegerStringSelectorNode, but likely allows the list of strings to be dynamically input or generated.
+### **EmAySee Box to Mask**
 
-**EmAySee_ProbabilityStringSelectorNode.py**
+Converts bounding box coordinates (X, Y, Width, Height) directly into a mask. It can derive dimensions from a reference image, providing a surgically precise way to target regions for Adetailer or Inpainting.
 
-	•	Node Title: EmAySee Probability String Selector
+### **EmAySee Mask Combiner**
 
-	•	Category: EmAySee_String
+A robust merging tool that takes up to 20 mask inputs and combines them into one using a logical "Max" operation. It handles mismatched mask sizes by scaling them to the largest input.
 
-	•	Description: Selects a string from a list based on a probabilistic distribution or a random selection influenced by probability settings.
+## **🧮 Math & Logic**
 
-**EmAySee_RandomIntFromList.py**
+### **EmAySee Math Expression**
 
-	•	Node Title: EmAySee Random Int From List
+Evaluates a mathematical string expression (e.g., max(w, h) \* 1.5) using input variables. Supports common functions like abs, round, pow, and math constants.
 
-	•	Category: EmAySee_Utils
+### **EmAySee Multiplier Node**
 
-	•	Description: Selects and outputs a random integer from a provided list of integers.
+Features a float slider (1.0 \- 2.0) and two integer fields. It outputs the two integers multiplied by the slider value, useful for scaling dimensions proportionally.
 
-**EmAySee_RandomIntFromList2.py**
+### **EmAySee Toggle to Integer**
 
-	•	Node Title: EmAySee Random Int From List 2
+A simple logic gate that converts a boolean toggle into one of two user-defined integers (e.g., Output 50 if ON, 0 if OFF).
 
-	•	Category: EmAySee_Utils
+### **EmAySee Greater Than (Float)**
 
-	•	Description: Likely another version or variation of EmAySee_RandomIntFromList.py, potentially with different input methods or features for selecting a random integer from a list.
+Compares two floats and outputs an Integer 1 (True) or 0 (False).
 
-**EmAySee_RandomIntegerFromListNode.py**
+### **EmAySee Checkbox to Float**
 
-	•	Node Title: EmAySee Random Integer From List
+Converts a UI checkbox (Boolean) into a float (1.0 or 0.0).
 
-	•	Category: EmAySee_Utils
+### **EmAySee Dynamic Range Slider**
 
-	•	Description: Another node for selecting a random integer from a list, possibly with different input/output types or controls compared to the other random integer list nodes.
+Calculates a precise float between a Min and Max value based on a percentage (0.0 to 1.0) with an optional quantization step.
 
-**EmAySee_RandomIntegerFromTogglesNode_PremadeLabels.py**
+## **🎲 Randomization & Selection**
 
-	•	Node Title: EmAySee Random Integer From Toggles Premade Labels
+### **EmAySee Random LoRA Loader**
 
-	•	Category: EmAySee_Utils
+Connect up to 10 LoRAs with individual activation toggles. The node randomly selects and loads one of the active LoRAs into your model/clip chain based on a seed.
 
-	•	Description: Selects a random integer based on the state of multiple toggle (boolean) inputs, using predefined labels for the toggles.
+### **EmAySee Random String Selector Suite**
 
-**EmAySee_RandomStringSelectorNode.py**
+* **Random String Selector (2-4 Choice):** Picks a random string from a small set of inputs.  
+* **Random String Selector (Max-20):** High-capacity selection for complex variations.  
+* **Probability String Selector:** Picks between two strings based on a weighted probability (0.0 to 1.0).
 
-	•	Node Title: EmAySee Random String Selector
+### **EmAySee Random Integer from List (Vroom Edition)**
 
-	•	Category: EmAySee_String
+Selects a random integer from a string list or range (e.g., 1, 2, 4-6, 50). Supports seeding and includes a "Use System Time" toggle for per-run randomization.
 
-	•	Description: Selects and outputs a random string from a provided list of strings.
+### **EmAySee Random Integer from Toggles**
 
-**EmAySee_RandomStringSelectorNode2.py**
+Features 20 slots with premade labels. It randomly selects the index of any active toggle, letting you build visual "feature menus" in your UI.
 
-	•	Node Title: EmAySee Random String Selector 2
+### **EmAySee String Selectors (Manual)**
 
-	•	Category: EmAySee_String
+* **Integer String Selector (Max-20):** Use a slider to manually switch between different prompt inputs.  
+* **REALLY Unique String Selector:** A dropdown menu interface for routing text between two inputs.  
+* **Pose Option Selector:** A 5-slot slider interface designed for switching between pose or style descriptions.
 
-	•	Description: Likely a second version or variation of EmAySee_RandomStringSelectorNode.py.
+## **✍️ Text & LLM Utilities**
 
-**EmAySee_RandomStringSelectorNodeFourChoice.py**
+### **EmAySee Submit to Oobabooga API (Advanced)**
 
-	•	Node Title: EmAySee Random String Selector Four Choice
+Interfaces with local Oobabooga text-generation-webui instances.
 
-	•	Category: EmAySee_String
+* **Thinking Parser Variants:** Specifically designed for reasoning models (DeepSeek). It splits the \<think\> tags and internal chain-of-thought from the final clean text, outputting both separately.  
+* **API Key Support:** Includes variants with Authorization headers for secured instances.
 
-	•	Description: Specifically designed to select a random string from a fixed set of four choices.
+### **EmAySee Var Text Replacer**
 
-**EmAySee_RandomStringSelectorNodeThreeChoice.py**
+A robust template engine. It takes a block of text and replaces up to 10 dynamic placeholders (%var1% to %var10%) with the strings provided to its input ports.
 
-	•	Node Title: EmAySee Random String Selector Three Choice
+### **EmAySee Tag Pruner**
 
-	•	Category: EmAySee_String
+A cleaning utility that takes a prompt and a secondary list of "bad tags." It filters the prompt, removing any matches from the removal list while cleaning up extra commas and whitespace.
 
-	•	Description: Specifically designed to select a random string from a fixed set of three choices.
+### **EmAySee LLM Output Cleaner**
 
-**EmAySee_RemoveDuplicateCSV.py**
+A post-processing node that strips out \<think\> blocks and extra whitespace from chatty model responses.
 
-	•	Node Title: EmAySee Remove Duplicate CSV
+### **EmAySee Text Combiner**
 
-	•	Category: EmAySee_Text
+A high-capacity input node that accepts up to 50 separate text strings and joins them into a single list with line returns.
 
-	•	Description: Takes a string containing comma-separated values (CSV) and removes any duplicate entries, outputting a cleaned CSV string.
+### **EmAySee Remove Duplicates (V2)**
 
-**EmAySee_RepaintKSampler.py**
+Deduplicates comma-separated strings (tags/keywords). Includes a toggle to either preserve the original order or sort results alphabetically.
 
-	•	Node Title: EmAySee Repaint KSampler
+### **EmAySee String Tuple Input**
 
-	•	Category: EmAySee_Repaint
+Converts multiline text into a Python string tuple, required for certain advanced node inputs.
 
-	•	Description: A specialized KSampler node designed for image repainting using a mask. It takes a latent image and a mask as input and performs sampling primarily in the masked (white) areas to add detail or change content while preserving the unmasked (black) areas.
+### **EmAySee Float To Text**
 
-**EmAySee_SaveImage.py**
+Converts numerical float data into a formatted string template (prefix:value:suffix).
 
-	•	Node Title: EmAySee Save Image
+### **EmAySee Metadata Formatter**
 
-	•	Category: EmAySee_Image
+Parses LoRA metadata JSON strings into a clean, human-readable format, stripping ss\_ prefixes for easier review.
 
-	•	Description: Saves an input image to a specified location on disk, with out worrying about if it's in Comfy path or not.
+## **🌐 System & File Utilities**
 
-**EmAySee_StringPoseSelectorNode.py**
+### **EmAySee Two-Step LoRA Loader**
 
-	•	Node Title: EmAySee String Pose Selector
+Decouples LoRA selection from the application process.
 
-	•	Category: EmAySee_String
+* **LoRA Name Selector:** A dropdown that outputs the selected LoRA name as a string.  
+* **LoRA Applier:** Accepts a string input for the name, allowing you to route names through logic nodes before finally loading them.
 
-	•	Description: Likely selects a string representation of a pose or pose-related parameter, possibly from a predefined list or based on input.
+### **EmAySee Lora File Picker**
 
-**EmAySee_StringTupleInputNode.py**
+Scans your LORA directories and provides a searchable dropdown. Outputs both the simple filename and the absolute full system path.
 
-	•	Node Title: EmAySee String Tuple Input (DEV NODE, Wouldn't use it)
+### **EmAySee Save Text to File**
 
-	•	Category: EmAySee_Utils
+Saves any string input to a .txt file in the ComfyUI output directory. Supports subfolders and automatic filename sanitization.
 
-	•	Description: Allows input of multiple strings as a tuple, useful for grouping related string data.
+### **EmAySee Host Pinger**
 
-**EmAySee_SubmitToOobaboogaAPI.py**
+Pings a hostname or IP address. Outputs 1 if reachable and 0 if down, allowing your workflow to adapt to server availability.
 
-	•	Node Title: EmAySee Submit To Oobabooga API
+### **EmAySee Get Model Path**
 
-	•	Category: EmAySee_Network
+Extracts the raw file system path from a ComfyUI Model object.
 
-	•	Description: Sends a text prompt or other data to an Oobabooga Text Generation Web UI API endpoint and outputs the response. Useful for integrating large language models into workflows.
+### **EmAySee Date Time Filename String**
 
-**EmAySee_ToggleIntNode.py**
+Generates a unique timestamp string (YYYYMMDDHHMMSS) down to the tenth of a second for unique identifiers.
 
-	•	Node Title: EmAySee Toggle Int
+## **🚀 Installation**
 
-  	•	Category: EmAySee_Utils
+1. Navigate to your ComfyUI custom\_nodes directory.  
+2. Clone this repository:  
+   git clone \[https://github.com/YourUsername/EmAySee\_Nodes.git\](https://github.com/YourUsername/EmAySee\_Nodes.git)
 
-  	•	Description: A node with a toggle (checkbox) that outputs one of two predefined integer values based on the toggle's state.
+3. Install dependencies:  
+   pip install requests google-genai
 
-**EmAySee_VarTextReplacer.py**
+4. Restart ComfyUI.
 
-	•	Node Title: EmAySee Var Text Replacer
+## **💻 Requirements**
 
-	•	Category: EmAySee_Text
-
-	•	Description: This node allows you to create a main text string containing placeholders in the format %var1% through %var10%. It provides 10 corresponding string input fields (var1 to var10). The node replaces each placeholder in the main text with the value from its corresponding input field, outputting the final combined string. Ideal for generating dynamic prompts or text based on workflow variables.
-
-**EmAySee_VeryUniqueStringSelectorNode.py**
-
-	•	Node Title: EmAySee Very Unique String Selector
-
-	•	Category: EmAySee_String
-
-	•	Description: Based on the name, this node likely provides a method for selecting a string that ensures uniqueness or is chosen based on a specific, potentially complex, selection logic.
-
-
-
-Feel free to explore the code for each node for more details on their implementation.  Know before you go... Code provided without any garuntees or warranties or support.
-
+* torch  
+* Pillow  
+* requests (For Oobabooga nodes)  
+* google-genai (For Gemini nodes)

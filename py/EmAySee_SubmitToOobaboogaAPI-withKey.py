@@ -19,8 +19,8 @@ class EmAySee_SubmitToOobaboogaAPIWithKey:  # Class name now prefixed with EmAyS
                 "typical_p": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}), # Common oobabooga default
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.0, "max": 2.0, "step": 0.01}), # Common oobabooga default                
                 "max_new_tokens": (
-                    ["25", "50", "75", "100", "125", "150", "175", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750", "800"],  # Dropdown options
-                    {"default": "200"}  # Default, adjust as needed
+                    ["25", "50", "75", "100", "125", "150", "175", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750", "800", "1024", "2048", "4096"],  # Dropdown options
+                    {"default": "300"}  # Default, adjust as needed
                 ),
                 "seed": ("INT", {"default": -1, "label": "Seed (-1 for random)"}), # Added Seed - common in completions API
                 "delay_seconds": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.1, "label": "Delay (seconds)"}),
