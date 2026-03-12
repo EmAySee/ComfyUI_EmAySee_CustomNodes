@@ -1,0 +1,171 @@
+import torch
+import gc
+import comfy.model_management
+
+class EmAySee_SelectiveModelUnloader:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "anything": ("*", {}),
+                "model_name_filter": ("STRING", {"default": "ModelConfig"}),
+                "deep_gc_scan": ("BOOLEAN", {"default": False}),
+                "exclude_checkpoints": ("BOOLEAN", {"default": True}),
+                "unload_mode": (["move_to_cpu", "delete_references"], {"default": "move_to_cpu"}),
+            },
+        }
+
+    RETURN_TYPES = ("*", "INT", "STRING")
+    RETURN_NAMES = ("output", "unloaded_count", "debug_info")
+    FUNCTION = "unload_specific"
+    CATEGORY = "EmAySee/Utils"
+
+    def unload_specific(self, anything, model_name_filter, deep_gc_scan, exclude_checkpoints, unload_mode):
+        unloaded_count = 0
+        debug_logs = []
+        
+        CHECKPOINT_TYPES = [
+            "SD15", "SD21", "SDXL", "SDXLRefiner", "SVD_img2vid", 
+            "Flux", "SD3", "Stable_Cascade", "SD_ASR", "PlaygroundV2"
+        ]
+        
+        remaining_models = []
+        loaded_models = comfy.model_management.current_loaded_models[:]
+        
+        for m in loaded_models:
+            model_obj = m.model
+            inner_model = getattr(model_obj, "model", None)
+            
+            meta_name = "Unknown"
+            is_checkpoint = False
+            
+            if hasattr(model_obj, "model_config"):
+                meta_name = model_obj.model_config.__class__.__name__
+                if any(cp_type in meta_name for cp_type in CHECKPOINT_TYPES):
+                    is_checkpoint = True
+            elif inner_model:
+                meta_name = inner_model.__class__.__name__
+            else:
+                meta_name = model_obj.__class__.__name__
+
+            should_unload = (model_name_filter == "*" or 
+                             model_name_filter.lower() in meta_name.lower())
+                
+            if should_unload:
+                if exclude_checkpoints and is_checkpoint:
+                    debug_logs.append(f"Skipping Protected Checkpoint: {meta_name}")
+                    remaining_models.append(m)
+                else:
+                    debug_logs.append(f"Standard Unload: {meta_name}")
+                    m.model_unload()
+                    unloaded_count += 1
+            else:
+                remaining_models.append(m)
+        
+        comfy.model_management.current_loaded_models = remaining_models
+
+        if deep_gc_scan:
+            debug_logs.append(f"--- Deep GC Scan (Mode: {unload_mode}) ---")
+            for obj in gc.get_objects():
+                try:
+                    if isinstance(obj, torch.nn.Module):
+                        class_name = obj.__class__.__name__
+                        
+                        is_gpu = False
+                        try:
+                            param = next(obj.parameters(), None)
+                            if param is not None and param.device.type == 'cuda':
+                                is_gpu = True
+                        except:
+                            pass
+                        
+                        if is_gpu:
+                            is_cp_hidden = any(cp_type in class_name for cp_type in CHECKPOINT_TYPES)
+                            
+                            if model_name_filter == "*" or model_name_filter.lower() in class_name.lower():
+                                if exclude_checkpoints and is_cp_hidden:
+                                    debug_logs.append(f"Skipping Protected Hidden Checkpoint: {class_name}")
+                                    continue
+                                
+                                if unload_mode == "move_to_cpu":
+                                    debug_logs.append(f"Evicting to CPU: {class_name}")
+                                    obj.to("cpu")
+                                else:
+                                    debug_logs.append(f"Nuking reference: {class_name}")
+                                    obj.to("cpu")
+                                
+                                unloaded_count += 1
+                except:
+                    continue
+
+        if unloaded_count > 0:
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                torch.cuda.ipc_collect()
+        
+        final_debug = "\n".join(debug_logs) if debug_logs else "No matches found."
+        return (anything, unloaded_count, final_debug)
+
+class EmAySee_SelectiveModelReloader:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "anything": ("*", {}),
+                "model_name_filter": ("STRING", {"default": "SamImage"}),
+            },
+        }
+
+    RETURN_TYPES = ("*", "INT", "STRING")
+    RETURN_NAMES = ("output", "reloaded_count", "debug_info")
+    FUNCTION = "reload_specific"
+    CATEGORY = "EmAySee/Utils"
+
+    def reload_specific(self, anything, model_name_filter):
+        reloaded_count = 0
+        debug_logs = []
+        
+        for obj in gc.get_objects():
+            try:
+                if isinstance(obj, torch.nn.Module):
+                    class_name = obj.__class__.__name__
+                    
+                    if model_name_filter.lower() in class_name.lower():
+                        is_cpu = False
+                        try:
+                            param = next(obj.parameters(), None)
+                            if param is not None and param.device.type == 'cpu':
+                                is_cpu = True
+                        except:
+                            pass
+                        
+                        if is_cpu:
+                            debug_logs.append(f"Moving back to GPU: {class_name}")
+                            obj.to(comfy.model_management.get_torch_device())
+                            reloaded_count += 1
+            except:
+                continue
+                
+        if reloaded_count > 0:
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                
+        final_debug = "\n".join(debug_logs) if debug_logs else "No models needed reloading."
+        return (anything, reloaded_count, final_debug)
+
+NODE_CLASS_MAPPINGS = {
+    "EmAySee_SelectiveModelUnloader": EmAySee_SelectiveModelUnloader,
+    "EmAySee_SelectiveModelReloader": EmAySee_SelectiveModelReloader
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "EmAySee_SelectiveModelUnloader": "EmAySee Selective Model Unloader",
+    "EmAySee_SelectiveModelReloader": "EmAySee Selective Model Reloader"
+}

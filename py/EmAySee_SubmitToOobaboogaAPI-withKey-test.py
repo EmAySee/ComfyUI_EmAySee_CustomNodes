@@ -2,7 +2,7 @@ import requests
 import json
 import time
 
-class EmAySee_SubmitToOobaboogaAPIWithKey:  # Class name now prefixed with EmAySee_
+class EmAySee_SubmitToOobaboogaAPIWithKey_test:  # Class name now prefixed with EmAySee_
     def __init__(self):
         pass
 
@@ -12,15 +12,16 @@ class EmAySee_SubmitToOobaboogaAPIWithKey:  # Class name now prefixed with EmAyS
             "required": {
                 "apikey_input": ("STRING", {"default": "Enter your api key here"}),
                 "text_input": ("STRING", {"default": "Enter your prompt for text-generation-webui here"}),
-                "api_endpoint": ("STRING", {"default": "http://10.0.0.57:5000/v1/completions"}),  # Default oobabooga COMPletions API endpoint - Non-streaming
+                "api_endpoint": ("STRING", ["http://10.0.0.71:5000/v1/completions","http://10.0.0.76:5000/v1/completions"],{"default": "http://10.0.0.71:5000/v1/completions"}),  # Default oobabooga COMPletions API endpoint - Non-streaming
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.01, "max": 2.0, "step": 0.01}), # Common oobabooga default
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),     # Common oobabooga default
                 "top_k": ("INT", {"default": 0, "min": 0, "max": 200}), # 0 means disabled in oobabooga
+                "min_p": ("INT", {"default": 0, "min": 0, "max": 200}), # 0 means disabled in oobabooga
                 "typical_p": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}), # Common oobabooga default
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.0, "max": 2.0, "step": 0.01}), # Common oobabooga default                
                 "max_new_tokens": (
-                    ["25", "50", "75", "100", "125", "150", "175", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750", "800", "1024", "2048", "4096"],  # Dropdown options
-                    {"default": "300"}  # Default, adjust as needed
+                    ["25", "50", "75", "100", "125", "150", "175", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750", "800"],  # Dropdown options
+                    {"default": "200"}  # Default, adjust as needed
                 ),
                 "seed": ("INT", {"default": -1, "label": "Seed (-1 for random)"}), # Added Seed - common in completions API
                 "delay_seconds": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.1, "label": "Delay (seconds)"}),
@@ -47,6 +48,7 @@ class EmAySee_SubmitToOobaboogaAPIWithKey:  # Class name now prefixed with EmAyS
             "temperature": temperature,
             "top_p": top_p,
             "top_k": top_k,
+            "min_p": top_k,
             "typical_p": typical_p,
             "repetition_penalty": repetition_penalty,
             "seed": seed, # Added seed to payload
@@ -96,9 +98,9 @@ class EmAySee_SubmitToOobaboogaAPIWithKey:  # Class name now prefixed with EmAyS
 
 
 NODE_CLASS_MAPPINGS = {
-    "EmAySee_SubmitToOobaboogaAPIWithKey": EmAySee_SubmitToOobaboogaAPIWithKey  # Class mapping with alias
+    "EmAySee_SubmitToOobaboogaAPIWithKey_test": EmAySee_SubmitToOobaboogaAPIWithKey_test  # Class mapping with alias
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "EmAySee_SubmitToOobaboogaAPIWithKey": "EmAySee Submit to Oobabooga API Node With API Key" # Display name with alias
+    "EmAySee_SubmitToOobaboogaAPIWithKey_test": "EmAySee Submit to Oobabooga API Node With API Key_test" # Display name with alias
 }
