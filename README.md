@@ -1,4 +1,62 @@
-# **Architectural Orchestration and Procedural Logic in the EmAySee Custom Node Ecosystem for ComfyUI**
+# ***Node List***
+
+### **Logical and Numerical Utilities**
+
+* **EmAySee\_CheckboxFloatNode**: A boolean checkbox that outputs specific float values based on whether it is checked or unchecked.  
+* **EmAySee\_ToggleIntNode**: A toggle switch that outputs one of two predefined integer values depending on its state.  
+* **EmAySee\_RandomIntFromList (v1, v2, & Standard)**: These nodes select and output a single random integer from a provided list.  
+* **EmAySee\_RandomIntegerFromTogglesNode\_PremadeLabels**: Selects a random integer based on the active state of several labeled toggles.  
+* **EmAySee\_MathExpression**: Evaluates mathematical expressions within the workflow.  
+* **EmAySee\_TwentyFloatToText (v1, v2, & AndFloat)**: Converts and aggregates up to 20 float values into a single text block for monitoring or logging.
+
+### **Text Orchestration and Selection**
+
+* **EmAySee\_VarTextReplacer**: A template engine that takes a main text block with placeholders (like %var1% to %var10%) and replaces them with values from ten input fields.  
+* **EmAySee\_RandomStringSelectorNode (v1, v2, 3-Choice, & 4-Choice)**: Selects a random string from a list or a fixed number of choices.  
+* **EmAySee\_ProbabilityStringSelectorNode**: Selects a string from a list based on user-defined probability weights.  
+* **EmAySee\_VeryUniqueStringSelectorNode**: A stateful randomizer that avoids repeating the same selection in consecutive runs to ensure batch diversity.  
+* **EmAySee\_DynamicStringSelectorNode**: Allows for selection from a list of strings that can be dynamically updated or input by other nodes.  
+* **EmAySee\_IntegerStringSelectorNode (Standard & Dynamic)**: Uses an integer input as an index to select a specific string from a list.  
+* **EmAySee\_RemoveDuplicateCSV**: Cleans comma-separated strings by removing any redundant entries.  
+* **EmAySee\_TextCombiner**: Merges multiple text sources into a single output.  
+* **EmAySee\_StringPoseSelectorNode**: Selects pose-related descriptors or parameters from a predefined set.
+
+### **LLM Integration and Networking**
+
+* **EmAySee\_SubmitToOobaboogaAPI**: Sends prompts to a local or remote Oobabooga text generation backend and returns the LLM's response.  
+* **EmAySee\_SubmitToOobaboogaAPIWithKey**: A version of the Oobabooga connector that supports API keys for secure remote access.  
+* **EmAySee\_SubmitToOobaboogaAPIWithKeyThinker / WithThinkParse**: Specialized nodes for "Chain of Thought" reasoning that can separate the model's internal "thoughts" from its final textual output.  
+* **EmAySee\_DeepReasoningConnector**: An advanced interface for complex LLM prompting and reasoning tasks.  
+* **EmAySee\_SpectreAPIConnector**: Facilitates communication with the Spectre API service.  
+* **EmAySee\_HostPinger**: Pings a specific IP or hostname and returns 1 if reachable or 0 if unreachable, acting as a network gate for the workflow.
+
+### **Image and Model Management**
+
+* **EmAySee\_RepaintKSampler**: A specialized sampler for inpainting that focuses denoising energy on masked areas while keeping unmasked regions stable.  
+* **EmAySee\_SaveImage**: Saves generated images to any absolute file path on disk, bypassing ComfyUI's standard output folder restrictions.  
+* **EmAySee\_SaveTextToFile**: Persists textual data, such as prompts or parameters, to a specific file.  
+* **EmAySee\_VisualMachine**\_SaveImageAndText\_V2: A multi-modal saving node that exports images along with their associated textual metadata.  
+* **EmAySee\_VAECompatibleAspectRatioCalculator**: Calculates optimal width and height for a target aspect ratio to ensure mathematical compatibility with the VAE (typically ensuring dimensions are multiples of 8).  
+* **EmAySee\_SelectiveModelReloader / Unloader**: Manages GPU memory by dynamically loading or unloading specific models from VRAM during the workflow.  
+* **EmAySee\_ImageGetSize**: Outputs the dimensions (width and height) of an input image.
+
+### **Workflow Automation and State Management**
+
+* **EmAySee\_DateTimeStringNode**: Generates a string of the current date and time for timestamping or logging.  
+* **EmAySee\_ContextManager (v1, v2), ContextReader, & ContextWriter**: Provides a system for grouping and passing multiple workflow variables through the graph without excessive wiring.  
+* **EmAySee\_GlobalStringReader & Updater**: Allows for the storage and retrieval of string variables that are accessible globally across the entire ComfyUI workspace.  
+* **EmAySee\_LoRAMetadataExtractor (Variants)**: Extracts and filters tags or metadata directly from LoRA files for use in prompts.  
+* **EmAySee\_TagPruner & WD14TagFilter**: Sophisticated filtering tools to clean up or remove unwanted keywords from automated captioning outputs.  
+* **EmAySee\_StringTupleInputNode**: A developer utility that groups several strings into a single tuple object for more complex data routing.
+
+
+
+
+
+# ***Deep Dive***
+
+
+## *Architectural Orchestration and Procedural Logic in the EmAySee Custom Node Ecosystem for ComfyUI*
 
 The rapid maturation of node-based generative AI environments has catalyzed a shift from static, linear image generation toward dynamic, high-complexity procedural workflows. Within this evolving landscape, the repository known as ComfyUI\_EmAySee\_CustomNodes provides a sophisticated suite of tools designed to address the challenges of stochastic logic, external API integration, and advanced text orchestration.1 By bridging the gap between traditional software engineering principles and the non-linear requirements of diffusion models, this ecosystem facilitates a higher degree of automation and control for professional practitioners. This report provides an exhaustive technical analysis of the nodes contained within the py directory of the EmAySee repository, exploring their individual functionalities, their collective impact on graph-based synthesis, and the broader implications for the future of AI-assisted content creation.
 
