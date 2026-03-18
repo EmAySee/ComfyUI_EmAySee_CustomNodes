@@ -4,7 +4,7 @@ import os
 import sys
 from .pysssss import init, get_ext_dir
 
-# High-Compatibility ANSI Colors
+#  High-Compatibility ANSI Colors
 MAGENTA_BRIGHT = "\033[95m"
 BLUE_BRIGHT    = "\033[94m"
 CYAN_BRIGHT    = "\033[96m"
@@ -13,8 +13,8 @@ CYAN           = "\033[1;36m"
 MAGENTA        = "\033[1;35m"
 RESET          = "\033[0m"
 
-# 5-Line Gradient ASCII Header: EmAySee (Block Style)
-# Each line is wrapped individually to force the color shift
+#  5-Line Gradient ASCII Header: EmAySee (Block Style)
+#  Each line is wrapped individually to force the color shift
 banner = f"""
 {MAGENTA_BRIGHT} ███████╗███╗   ███╗ █████╗ ██╗   ██╗ ██████╗███████╗███████╗{RESET}
 {MAGENTA_BRIGHT} ██╔════╝████╗ ████║██╔══██╗╚██╗ ██╔╝██╔════╝██╔════╝██╔════╝{RESET}
@@ -49,14 +49,14 @@ if init():
             
             if hasattr(module, "NODE_CLASS_MAPPINGS") and getattr(module, "NODE_CLASS_MAPPINGS") is not None:
                 NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
-                # Success Checkmark
+                #  Success Checkmark
                 print(f"  {GREEN}[✓]{RESET} {module_name}")
                 
                 if hasattr(module, "NODE_DISPLAY_NAME_MAPPINGS") and getattr(module, "NODE_DISPLAY_NAME_MAPPINGS") is not None:
                     NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
             
         except Exception as e:
-            # Failure Cross
+            #  Failure Cross
             print(f"  \033[1;31m[✗]\033[0m {module_name} : Error -> {str(e)}")
 
 print(f"{MAGENTA}----------------------------------------------------------{RESET}")

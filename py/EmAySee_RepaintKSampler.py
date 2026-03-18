@@ -30,20 +30,20 @@ class EmAySee_RepaintKSampler:
     FUNCTION = "EmAySee_function"
 
     def EmAySee_function(self, model, positive, negative, latent_image, mask, sampler_name, scheduler, steps, cfg, denoise):
-        # Invert the mask because in ComfyUI, white usually means "keep" and black means "change" for inpainting
+        #  Invert the mask because in ComfyUI, white usually means "keep" and black means "change" for inpainting
         inverted_mask = 1.0 - mask.unsqueeze(1)
 
-        # Apply the mask to the latent image
+        #  Apply the mask to the latent image
         masked_latent = latent_image["samples"] * inverted_mask
 
-        # Create an empty latent image for the masked area (this will be filled by the sampler)
+        #  Create an empty latent image for the masked area (this will be filled by the sampler)
         initial_noise = torch.randn_like(latent_image["samples"]) * denoise
 
-        # Combine the masked original and the initial noise for the masked area
-        # Where the mask is white (1.0), we take the noise; where it's black (0.0), we take the original latent
+        #  Combine the masked original and the initial noise for the masked area
+        #  Where the mask is white (1.0), we take the noise; where it's black (0.0), we take the original latent
         combined_latent = masked_latent + initial_noise * mask.unsqueeze(1)
 
-        # Perform the K-sampling with the combined latent as the starting point
+        #  Perform the K-sampling with the combined latent as the starting point
         sampler = ComfyUISampler(model)
         samples = sampler.sample(noise=combined_latent,
                                  positive=positive,

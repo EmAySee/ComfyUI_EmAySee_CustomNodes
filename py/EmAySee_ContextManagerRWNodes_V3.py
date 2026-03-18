@@ -16,7 +16,7 @@ def get_blocks(path):
         return []
     with open(path, 'r', encoding='utf-8') as f:
         data = f.read()
-    # V5 RE-DESIGNED REGEX: Looks for PROMPT and the LAST occurrence of STATE in a chunk
+    #  V5 RE-DESIGNED REGEX: Looks for PROMPT and the LAST occurrence of STATE in a chunk
     found = re.findall(r"(PROMPT:.*?STATE:.*?)(?=PROMPT:|\Z)", data, re.IGNORECASE | re.DOTALL)
     return [b.strip() for b in found if b.strip()]
 
@@ -70,12 +70,12 @@ class EmAySee_ContextWriter:
         
         text = new_generation.strip()
         
-        # --- V5 REPAIR LOGIC ---
-        # 1. Ensure PROMPT header
+        #  --- V5 REPAIR LOGIC ---
+        #  1. Ensure PROMPT header
         if not re.search(r"^PROMPT:", text, re.IGNORECASE):
             text = "PROMPT: " + text
         
-        # 2. Check for STATE header (case insensitive)
+        #  2. Check for STATE header (case insensitive)
         if not re.search(r"STATE:", text, re.IGNORECASE):
             print("--- [V5 WRITER] Repairing Missing STATE ---")
             text = text + "\n\nSTATE: [Repaired Placeholder]"
@@ -83,10 +83,10 @@ class EmAySee_ContextWriter:
         abs_path = os.path.join(get_comfy_root(), file_name)
         blocks = get_blocks(abs_path)
         
-        # Deduplication check
+        #  Deduplication check
         if not (blocks and blocks[-1][:100] == text[:100]):
             blocks.append(text)
-            # Keep only the requested history depth
+            #  Keep only the requested history depth
             atomic_write(abs_path, blocks[-history_count:])
         
         return (text,)

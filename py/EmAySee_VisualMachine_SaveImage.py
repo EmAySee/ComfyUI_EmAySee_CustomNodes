@@ -36,8 +36,8 @@ class EmAySee_VisualMachine_SaveImageAndText_V2:
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
             
-            # 1. Handle Naming
-            # Uses the prefix as the base name; extension replacement happens here
+            #  1. Handle Naming
+            #  Uses the prefix as the base name; extension replacement happens here
             file_base = f"{filename_prefix}"
             image_file = f"{file_base}.png"
             log_file = f"{file_base}.txt"
@@ -45,10 +45,10 @@ class EmAySee_VisualMachine_SaveImageAndText_V2:
             image_path = os.path.join(full_output_folder, image_file)
             log_path = os.path.join(full_output_folder, log_file)
 
-            # 2. Save the Image
+            #  2. Save the Image
             img.save(image_path, pnginfo=None, compress_level=4)
 
-            # 3. Save the Companion Text File
+            #  3. Save the Companion Text File
             entry = (
                 f"--- SPECTRE V2 METADATA ---\n"
                 f"FILENAME: {image_file}\n"

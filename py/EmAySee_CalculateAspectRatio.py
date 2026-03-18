@@ -18,7 +18,7 @@ class EmAySee_CalculateAspectRatio:
     def EmAySee_calculate_dimensions(self, image, output_height):
         batch_size, original_height, original_width, channels = image.shape
         
-        # Calculate the new width based on the aspect ratio
+        #  Calculate the new width based on the aspect ratio
         ratio = original_width / original_height
         output_width = int(output_height * ratio)
         

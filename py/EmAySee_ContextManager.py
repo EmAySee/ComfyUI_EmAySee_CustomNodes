@@ -21,13 +21,13 @@ class EmAySee_ContextManager:
     CATEGORY = "EmAySee/Automation"
 
     def manage_context(self, file_path, history_count, mode, force_reset, new_generation=""):
-        # Force absolute path to avoid "Ghost" file issues in ComfyUI temp folders
+        #  Force absolute path to avoid "Ghost" file issues in ComfyUI temp folders
         abs_path = os.path.abspath(file_path)
         
         if force_reset and os.path.exists(abs_path):
             os.remove(abs_path)
 
-        # Helper to read blocks
+        #  Helper to read blocks
         def get_blocks(path):
             if not os.path.exists(path) or os.path.getsize(path) == 0:
                 return []
@@ -39,11 +39,11 @@ class EmAySee_ContextManager:
         blocks = get_blocks(abs_path)
 
         if mode == "Read_Context":
-            # SEEDING: If file is empty, use the input wire as the current state
+            #  SEEDING: If file is empty, use the input wire as the current state
             if not blocks:
                 if new_generation and new_generation.strip():
                     seed = new_generation.strip()
-                    # Write immediately so the Append node sees it later in the same cycle
+                    #  Write immediately so the Append node sees it later in the same cycle
                     with open(abs_path, 'w', encoding='utf-8') as f:
                         f.write(seed + "\n\n")
                         f.flush()
@@ -56,17 +56,17 @@ class EmAySee_ContextManager:
 
         if mode == "Append_and_Prune":
             if new_generation and new_generation.strip():
-                # Avoid doubling up if Read_Context already seeded it
+                #  Avoid doubling up if Read_Context already seeded it
                 if not blocks or blocks[-1] != new_generation.strip():
                     blocks.append(new_generation.strip())
             
             pruned = blocks[-history_count:]
             
-            # ATOMIC WRITE
+            #  ATOMIC WRITE
             with open(abs_path, 'w', encoding='utf-8') as f:
                 f.write("\n\n".join(pruned))
                 f.flush()
-                os.fsync(f.fileno()) # Forces Windows/Linux to write to disk NOW
+                os.fsync(f.fileno()) #  Forces Windows/Linux to write to disk NOW
                 
             return (new_generation if new_generation else "",)
 

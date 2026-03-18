@@ -19,10 +19,10 @@ class EmAySee_GreaterThanNode:
             }
         }
 
-    RETURN_TYPES = ("INT",)  # The node will return an integer (0 or 1)
-    RETURN_NAMES = ("RESULT",) # The output port will be named 'RESULT'
-    FUNCTION = "compare_floats"  # The name of the function that executes the node's logic
-    CATEGORY = "Logic"  # The category where the node will appear in ComfyUI
+    RETURN_TYPES = ("INT",)  #  The node will return an integer (0 or 1)
+    RETURN_NAMES = ("RESULT",) #  The output port will be named 'RESULT'
+    FUNCTION = "compare_floats"  #  The name of the function that executes the node's logic
+    CATEGORY = "Logic"  #  The category where the node will appear in ComfyUI
 
     def compare_floats(self, A, B):
         """
@@ -30,17 +30,17 @@ class EmAySee_GreaterThanNode:
         Returns 1 if A is greater than B, otherwise returns 0.
         """
         if A > B:
-            return (1,)  # Return as a tuple, as ComfyUI expects
+            return (1,)  #  Return as a tuple, as ComfyUI expects
         else:
-            return (0,)  # Return as a tuple
+            return (0,)  #  Return as a tuple
 
-# A dictionary of all custom nodes available in this file.
-# The key is the node class name, and the value is the class itself.
+#  A dictionary of all custom nodes available in this file.
+#  The key is the node class name, and the value is the class itself.
 NODE_CLASS_MAPPINGS = {
     "EmAySee_GreaterThanNode": EmAySee_GreaterThanNode
 }
 
-# A dictionary that provides more user-friendly names for the nodes in the UI.
+#  A dictionary that provides more user-friendly names for the nodes in the UI.
 NODE_DISPLAY_NAME_MAPPINGS = {
     "EmAySee_GreaterThanNode": "EmAySee Greater Than (Float)"
 }

@@ -26,7 +26,7 @@ class EmAySee_SubmitToOobaboogaAPIWithKey_WithThinkParse:
                 "dry_base": ("FLOAT", {"default": 1.75, "min": 1.0, "max": 5.0, "step": 0.05}), 
                 "dry_allowed_length": ("INT", {"default": 2, "min": 0, "max": 20}), 
                 "enable_thinking": ("BOOLEAN", {"default": True}),
-                # New Parameter: reasoning_effort
+                #  New Parameter: reasoning_effort
                 "reasoning_effort": (["low", "medium", "high"], {"default": "medium"}),
                 "guidance_scale": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 5.0, "step": 0.1}),
                 "seed": ("INT", {"default": -1, "min": -1, "max": 0xffffffffffffffff}),
@@ -71,7 +71,7 @@ class EmAySee_SubmitToOobaboogaAPIWithKey_WithThinkParse:
             "dry_base": dry_base,
             "dry_allowed_length": dry_allowed_length,
             "enable_thinking": enable_thinking,
-            "reasoning_effort": reasoning_effort, # Added here
+            "reasoning_effort": reasoning_effort, #  Added here
             "guidance_scale": guidance_scale,
             "negative_prompt": negative_prompt,
             "instruction_template": instruction_template,
@@ -95,11 +95,11 @@ class EmAySee_SubmitToOobaboogaAPIWithKey_WithThinkParse:
                 raw_content = ""
                 print(f"EmAySee_SubmitToOobaboogaAPIWithKey: No content in response: {result_json}")
 
-            # 1. Extract thinking content
+            #  1. Extract thinking content
             think_match = re.search(r'<think>(.*?)</think>', raw_content, flags=re.DOTALL)
             thinking_content = think_match.group(1).strip() if think_match else ""
 
-            # 2. Remove thinking tags to get clean text
+            #  2. Remove thinking tags to get clean text
             clean_text = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
 
             return (clean_text, thinking_content)

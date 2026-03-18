@@ -121,7 +121,7 @@ class EmAySee_DeepReasoningConnector:
                 if stop_on_error: raise e
                 return (f"Error: {str(e)}", "", "ERROR")
 
-        # Parsing results
+        #  Parsing results
         think_pattern = r'<(?:think|thought)>(.*?)</(?:think|thought)>'
         think_match = re.search(think_pattern, full_content, flags=re.DOTALL | re.IGNORECASE)
         

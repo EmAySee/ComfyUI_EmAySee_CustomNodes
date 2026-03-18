@@ -8,7 +8,7 @@ class EmAySee_RandomIntegerFromTogglesNode_PremadeLabels:
     def INPUT_TYPES(s):
         return {"required": {
                     "node_description": ("STRING", {"multiline": True, "default": "Select options below to choose from randomly."}),
-                    "option_1": ("TOGGLE", {"default": False, "label": "Option 1: Label for Option 1"}), # Example labels
+                    "option_1": ("TOGGLE", {"default": False, "label": "Option 1: Label for Option 1"}), #  Example labels
                     "option_2": ("BOOLEAN", {"default": False, "label": "Option 2: Label for Option 2"}),
                     "option_3": ("BOOLEAN", {"default": False, "label": "Option 3: Label for Option 3"}),
                     "option_4": ("BOOLEAN", {"default": False, "label": "Option 4: Label for Option 4"}),
@@ -36,10 +36,10 @@ class EmAySee_RandomIntegerFromTogglesNode_PremadeLabels:
 
     FUNCTION = "get_random_integer_from_toggles"
 
-    def get_random_integer_from_toggles(self, node_description, **kwargs): # Only node_description and kwargs now
+    def get_random_integer_from_toggles(self, node_description, **kwargs): #  Only node_description and kwargs now
         selected_integers = []
         for i in range(1, 21):
-            toggle_name = f"option_{i}" # Toggle input names are now option_1, option_2,...
+            toggle_name = f"option_{i}" #  Toggle input names are now option_1, option_2,...
             if kwargs.get(toggle_name, False):
                 selected_integers.append(i)
 

@@ -15,7 +15,7 @@ class EmAySee_IntegerStringSelectorNode:
                         "min": 1,
                         "max": 4,
                         "step": 1,
-                        "display": "slider", # Or "number"
+                        "display": "slider", #  Or "number"
                         "label": "Select Input (1-4)"
                     }),
                  },
@@ -37,13 +37,13 @@ class EmAySee_IntegerStringSelectorNode:
         elif select_index == 4:
             return (string_input_4,)
         else:
-            return ("",) # Should not happen given input constraints, but as a failsafe
+            return ("",) #  Should not happen given input constraints, but as a failsafe
 
 
-NODE_CLASS_MAPPINGS = { # Moved to after the class definition
+NODE_CLASS_MAPPINGS = { #  Moved to after the class definition
     "EmAySee_IntegerStringSelectorNode": EmAySee_IntegerStringSelectorNode
 }
 
-NODE_DISPLAY_NAME_MAPPINGS = { # Moved to after the class definition
+NODE_DISPLAY_NAME_MAPPINGS = { #  Moved to after the class definition
     "EmAySee_IntegerStringSelectorNode": "EmAySee Integer String Selector"
 }

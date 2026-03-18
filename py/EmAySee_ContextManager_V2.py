@@ -21,7 +21,7 @@ class EmAySee_ContextManager_V2:
     CATEGORY = "EmAySee_Automation"
 
     def manage_context(self, file_path, history_count, mode, force_reset, new_generation=""):
-        # ABSOLUTE PATH LOGGING
+        #  ABSOLUTE PATH LOGGING
         abs_path = os.path.abspath(file_path)
         print(f"--- [EmAySee V2] DEBUG: Working Directory is {os.getcwd()} ---")
         print(f"--- [EmAySee V2] DEBUG: Looking for file at {abs_path} ---")
@@ -42,7 +42,7 @@ class EmAySee_ContextManager_V2:
             with open(path, 'r', encoding='utf-8') as f:
                 data = f.read()
             
-            # This regex is strict. If your file doesn't have "PROMPT:" it will return nothing.
+            #  This regex is strict. If your file doesn't have "PROMPT:" it will return nothing.
             found = re.findall(r"(PROMPT:.*?STATE:.*?)(?=PROMPT:|\Z)", data, re.DOTALL)
             print(f"--- [EmAySee V2] DEBUG: Found {len(found)} valid PROMPT/STATE blocks. ---")
             return [b.strip() for b in found if b.strip()]

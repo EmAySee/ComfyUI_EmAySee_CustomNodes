@@ -35,7 +35,7 @@ class EmAySee_SubmitToOobaboogaAPIWithKeyThinker:
             "Authorization": f"Bearer {api_key}"
         }
 
-        # Construct the payload for OpenAI-compatible API
+        #  Construct the payload for OpenAI-compatible API
         data = {
             "messages": [
                 {"role": "system", "content": system_prompt},
@@ -45,7 +45,7 @@ class EmAySee_SubmitToOobaboogaAPIWithKeyThinker:
             "temperature": temperature,
             "top_p": top_p,
             "seed": seed,
-            "mode": "instruct", # Helpful for some Ooba configs
+            "mode": "instruct", #  Helpful for some Ooba configs
             "stream": False
         }
 
@@ -55,20 +55,20 @@ class EmAySee_SubmitToOobaboogaAPIWithKeyThinker:
             
             result_json = response.json()
             
-            # Extract content from OpenAI format
+            #  Extract content from OpenAI format
             if "choices" in result_json and len(result_json["choices"]) > 0:
                 raw_content = result_json["choices"][0]["message"]["content"]
             else:
                 raw_content = ""
                 print(f"EmAySee_SubmitToOobaboogaAPIWithKeyThinker: No content in response: {result_json}")
 
-            # --- Logic to separate <think> content from clean text ---
+            #  --- Logic to separate <think> content from clean text ---
             
-            # 1. Extract thinking content
+            #  1. Extract thinking content
             think_match = re.search(r'<think>(.*?)</think>', raw_content, flags=re.DOTALL)
             thinking_content = think_match.group(1).strip() if think_match else ""
 
-            # 2. Remove thinking tags to get clean text
+            #  2. Remove thinking tags to get clean text
             clean_text = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
 
             return (clean_text, thinking_content)

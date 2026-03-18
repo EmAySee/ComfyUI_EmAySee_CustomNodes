@@ -16,7 +16,7 @@ class EmAySee_StringPoseSelectorNode:
                         "min": 1,
                         "max": 5,
                         "step": 1,
-                        "display": "slider", # Or "number"
+                        "display": "slider", #  Or "number"
                         "label": "Select Input (1-5)"
                     }),
                  },
@@ -40,13 +40,13 @@ class EmAySee_StringPoseSelectorNode:
         elif select_index == 5:
             return (string_input_5,)            
         else:
-            return ("",) # Should not happen given input constraints, but as a failsafe
+            return ("",) #  Should not happen given input constraints, but as a failsafe
 
 
-NODE_CLASS_MAPPINGS = { # Moved to after the class definition
+NODE_CLASS_MAPPINGS = { #  Moved to after the class definition
     "EmAySee_StringPoseSelectorNode": EmAySee_StringPoseSelectorNode
 }
 
-NODE_DISPLAY_NAME_MAPPINGS = { # Moved to after the class definition
+NODE_DISPLAY_NAME_MAPPINGS = { #  Moved to after the class definition
     "EmAySee_StringPoseSelectorNode": "EmAySee Pose Option Selector"
 }

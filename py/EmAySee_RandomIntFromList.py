@@ -1,5 +1,5 @@
 import random
-import time  # Import the time module
+import time  #  Import the time module
 
 class EmAySee_RandomIntFromList:
     """
@@ -21,10 +21,10 @@ class EmAySee_RandomIntFromList:
                 }),
                 "seed": ("INT", {
                     "default": 0,
-                    "min": 0,  # Minimum seed value
-                    "step": 1,  # Increment/decrement step
-                    "display": "number" # Optional, for better UI
-                    # Can add "forceInput": True to *require* a connection.
+                    "min": 0,  #  Minimum seed value
+                    "step": 1,  #  Increment/decrement step
+                    "display": "number" #  Optional, for better UI
+                    #  Can add "forceInput": True to *require* a connection.
                 }),
             },
             "optional": {
@@ -50,12 +50,12 @@ class EmAySee_RandomIntFromList:
             if not numbers:
                 return (0,)
             
-            # Seed handling:
+            #  Seed handling:
             if use_system_time:
-                # Use system time * number of milliseconds for a more unique seed each run
-                seed = int(time.time() * 1000)  # Use milliseconds for more variation
+                #  Use system time * number of milliseconds for a more unique seed each run
+                seed = int(time.time() * 1000)  #  Use milliseconds for more variation
                 
-            random.seed(seed)  # Set the seed *before* calling random.choice
+            random.seed(seed)  #  Set the seed *before* calling random.choice
             random_int = random.choice(numbers)
             return (random_int,)
 
