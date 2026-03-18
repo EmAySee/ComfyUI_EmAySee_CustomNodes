@@ -16,28 +16,28 @@ class EmAySee_ContextWriter_V5:
     CATEGORY = "EmAySee_Automation/Context"
 
     def write_context(self, file_path, text_to_append, max_history):
-        #  1. Truncation Guard
+        # 1. Truncation Guard
         if "[REASONING TRUNCATED]" in text_to_append:
             raise ValueError(f"CRITICAL ERROR: LLM Output was truncated. Workflow halted to prevent history corruption.")
 
-        #  2. Path Validation
+        # 2. Path Validation
         if not os.path.exists(os.path.dirname(file_path)):
             os.makedirs(os.path.dirname(file_path), mode=0o777, exist_ok=True)
 
-        #  3. Read existing to manage history length
+        # 3. Read existing to manage history length
         history = []
         if os.path.exists(file_path):
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
                 history = [block for block in content.split("---") if "STATE:" in block]
 
-        #  4. Append New Entry
+        # 4. Append New Entry
         history.append(text_to_append)
         
-        #  5. Keep only the last N entries
+        # 5. Keep only the last N entries
         history = history[-max_history:]
         
-        #  6. Rewrite file
+        # 6. Rewrite file
         with open(file_path, "w", encoding="utf-8") as f:
             f.write("---".join(history))
 

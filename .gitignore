@@ -1,17 +1,17 @@
-#  Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
-#  OSX useful to ignore
+# OSX useful to ignore
 *.DS_Store
 .AppleDouble
 .LSOverride
 
-#  Thumbnails
+# Thumbnails
 ._*
 
-#  Files that might appear in the root of a volume
+# Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -20,17 +20,17 @@ __pycache__/
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-#  Directories potentially created on remote AFP share
+# Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
 
-#  C extensions
+# C extensions
 *.so
 
-#  Distribution / packaging
+# Distribution / packaging
 .Python
 env/
 venv/
@@ -49,17 +49,17 @@ var/
 .installed.cfg
 *.egg
 
-#  PyInstaller
-#   Usually these files are written by a python script from a template
-#   before PyInstaller builds the exe, so as to inject date/other infos into it.
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
-#  Installer logs
+# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
-#  Unit test / coverage reports
+# Unit test / coverage reports
 htmlcov/
 .tox/
 .coverage
@@ -71,30 +71,30 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-#  Translations
+# Translations
 *.mo
 *.pot
 
-#  Django stuff:
+# Django stuff:
 *.log
 
-#  Sphinx documentation
+# Sphinx documentation
 docs/_build/
 
-#  IntelliJ Idea
+# IntelliJ Idea
 .idea
 *.iml
 *.ipr
 *.iws
 
-#  PyBuilder
+# PyBuilder
 target/
 
-#  Cookiecutter
+# Cookiecutter
 output/
 python_boilerplate/
 cookiecutter-pypackage-env/
 
-#  vscode settings
+# vscode settings
 .history/
 *.code-workspace

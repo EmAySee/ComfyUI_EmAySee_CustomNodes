@@ -101,7 +101,7 @@ class EmAySee_LoraStacker20:
             "optional": {}
         }
         
-        #  Create inputs for 20 Loras with individual strength controls
+        # Create inputs for 20 Loras with individual strength controls
         for i in range(1, 21):
             inputs["optional"][f"lora_{i}"] = ("LORA_OBJECT",)
             inputs["required"][f"strength_model_{i}"] = ("FLOAT", {"default": 1.0, "min": -10.0, "max": 10.0, "step": 0.01})
@@ -117,13 +117,13 @@ class EmAySee_LoraStacker20:
         current_model = model
         current_clip = clip
 
-        #  Iterate through all 20 possible slots
+        # Iterate through all 20 possible slots
         for i in range(1, 21):
             lora_obj = kwargs.get(f"lora_{i}", None)
             str_model = kwargs.get(f"strength_model_{i}", 1.0)
             str_clip = kwargs.get(f"strength_clip_{i}", 1.0)
 
-            #  Only apply if a Lora Object is connected to the slot
+            # Only apply if a Lora Object is connected to the slot
             if lora_obj is not None:
                  if str_model == 0 and str_clip == 0:
                      continue

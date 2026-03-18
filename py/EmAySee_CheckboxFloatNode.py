@@ -17,10 +17,10 @@ class EmAySee_CheckboxFloatNode:
     FUNCTION = "checkbox_to_float"
 
     def checkbox_to_float(self, checkbox_input):
-        if checkbox_input: #  If checkbox_input is True (checked)
+        if checkbox_input: # If checkbox_input is True (checked)
             return (1.0,)
-        else: #  If checkbox_input is False (unchecked)
-            return (0.0,) #  Or you could return (0.0,) if you prefer 0 when unchecked
+        else: # If checkbox_input is False (unchecked)
+            return (0.0,) # Or you could return (0.0,) if you prefer 0 when unchecked
 
 NODE_CLASS_MAPPINGS = {
     "EmAySee_CheckboxFloatNode": EmAySee_CheckboxFloatNode

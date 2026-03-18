@@ -21,18 +21,18 @@ class EmAySee_VAECompatibleAspectRatioCalculator:
     FUNCTION = "EmAySee_calculate_dimensions"
 
     def EmAySee_calculate_dimensions(self, image, output_height):
-        #  We'll use the first image in the batch to determine dimensions.
+        # We'll use the first image in the batch to determine dimensions.
         batch_size, original_height, original_width, channels = image.shape
         
-        #  Calculate the ideal width based on the original aspect ratio.
+        # Calculate the ideal width based on the original aspect ratio.
         ratio = original_width / original_height
         
-        #  Calculate the new width based on the desired height and aspect ratio.
-        #  This new width must be a multiple of 64 to be VAE-compatible.
+        # Calculate the new width based on the desired height and aspect ratio.
+        # This new width must be a multiple of 64 to be VAE-compatible.
         vae_stride = 64
         calculated_width = output_height * ratio
         
-        #  Round the width to the nearest multiple of the VAE stride.
+        # Round the width to the nearest multiple of the VAE stride.
         output_width = int(round(calculated_width / vae_stride) * vae_stride)
         
         return (output_width, output_height,)

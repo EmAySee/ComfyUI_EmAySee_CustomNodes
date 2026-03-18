@@ -18,7 +18,7 @@ class EmAySee_RandomLoraLoader:
             }
         }
         
-        #  Dynamically create 10 LoRA slots with activation toggles
+        # Dynamically create 10 LoRA slots with activation toggles
         for i in range(1, 11):
             inputs["required"][f"lora_name_{i}"] = (lora_list,)
             inputs["required"][f"lora_active_{i}"] = ("BOOLEAN", {"default": True})
@@ -32,7 +32,7 @@ class EmAySee_RandomLoraLoader:
 
     def load_random_lora(self, model, clip, strength_model, strength_clip, seed, **kwargs):
         lora_options = []
-        #  Collect all active LoRAs from the inputs
+        # Collect all active LoRAs from the inputs
         for i in range(1, 11):
             lora_name = kwargs.get(f"lora_name_{i}")
             is_active = kwargs.get(f"lora_active_{i}")
@@ -42,17 +42,17 @@ class EmAySee_RandomLoraLoader:
         selected_lora_name = "None"
         selected_lora_index = 0
         
-        #  If no valid loras are active or strength is 0, pass through the original model/clip
+        # If no valid loras are active or strength is 0, pass through the original model/clip
         if not lora_options or (strength_model == 0 and strength_clip == 0):
             return (model, clip, selected_lora_name, selected_lora_index)
 
-        #  Use the provided seed for reproducibility
+        # Use the provided seed for reproducibility
         random.seed(seed)
         selected_lora = random.choice(lora_options)
         selected_lora_name = selected_lora["name"]
         selected_lora_index = selected_lora["index"]
 
-        #  --- LoRA Loading Logic (adapted from the default LoraLoader) ---
+        # --- LoRA Loading Logic (adapted from the default LoraLoader) ---
         lora_path = folder_paths.get_full_path("loras", selected_lora_name)
         lora = comfy.utils.load_torch_file(lora_path, safe_load=True)
         model_lora, clip_lora = comfy.sd.load_lora_for_models(model, clip, lora, strength_model, strength_clip)

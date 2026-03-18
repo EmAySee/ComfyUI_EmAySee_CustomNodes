@@ -22,7 +22,7 @@ class EmAySee_SaveImage:
                 "images": ("IMAGE",),
                 "subfolder": ("STRING", {"default": ""}),
                 "name_postfix": ("STRING", {"default": "image_"}),
-                "timestamp_format": (["none", "YYYYMMDDHHMMSS"], {"default": "YYYYMMDDHHMMSS"}),  #  Removed .f option
+                "timestamp_format": (["none", "YYYYMMDDHHMMSS"], {"default": "YYYYMMDDHHMMSS"}),  # Removed .f option
                 "name_prefix": ("STRING", {"default": ""}),
                 "separator": ("STRING", {"default": "_"}),
             },
@@ -48,31 +48,31 @@ class EmAySee_SaveImage:
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
 
-            #  --- Filename Construction ---
+            # --- Filename Construction ---
             filename_parts = []
 
-            #  Add name prefix (if provided)
+            # Add name prefix (if provided)
             if name_prefix:
                 filename_parts.append(name_prefix)
 
-            #  Add timestamp (if selected)
+            # Add timestamp (if selected)
             if timestamp_format != "none":
                 if timestamp_format == "YYYYMMDDHHMMSS":
-                    timestamp = time.strftime("%Y%m%d%H%M%S")  #  Keep only YYYYMMDDHHMMSS
-                #  No else needed, as the only other option is "none"
+                    timestamp = time.strftime("%Y%m%d%H%M%S")  # Keep only YYYYMMDDHHMMSS
+                # No else needed, as the only other option is "none"
                 filename_parts.append(timestamp)
 
-            #  Add the base filename postfix
+            # Add the base filename postfix
             filename_parts.append(name_postfix)
 
-            #  Join the parts with the separator
+            # Join the parts with the separator
             file_name = separator.join(filename_parts)
-            file = f"{file_name}"  #  comfyui counter
+            file = f"{file_name}"  # comfyui counter
             file_path = os.path.join(full_output_folder, f"{file}.png")
 
             filepaths.append(file_path)
 
-            #  --- Metadata Handling ---
+            # --- Metadata Handling ---
             if extra_pnginfo is not None:
                 pnginfo = PngImagePlugin.PngInfo()
                 for k, v in extra_pnginfo.items():

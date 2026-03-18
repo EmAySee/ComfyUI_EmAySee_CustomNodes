@@ -17,24 +17,24 @@ class EmAySee_WD14TagFilter:
     FUNCTION = "EmAySee_filter_tags"
 
     def EmAySee_filter_tags(self, wd14_tags_input, tags_to_remove):
-        #  1. Normalize the input WD14 tags string (replace newlines with commas, split)
-        #  This assumes the WD14 output is a string of tags separated by commas, spaces, or newlines.
+        # 1. Normalize the input WD14 tags string (replace newlines with commas, split)
+        # This assumes the WD14 output is a string of tags separated by commas, spaces, or newlines.
         input_tags = re.split(r'[,\s\n]+', wd14_tags_input.lower().strip())
         input_tags = [tag.strip() for tag in input_tags if tag.strip()]
 
-        #  2. Normalize the tags to remove string
-        #  Split the string in the text box by commas or newlines
+        # 2. Normalize the tags to remove string
+        # Split the string in the text box by commas or newlines
         remove_list_raw = re.split(r'[,\n]+', tags_to_remove.lower().strip())
         tags_to_remove_set = {tag.strip() for tag in remove_list_raw if tag.strip()}
 
-        #  3. Perform the filtering
+        # 3. Perform the filtering
         filtered_tags = []
         for tag in input_tags:
-            #  Only keep the tag if it is NOT in the set of tags to remove
+            # Only keep the tag if it is NOT in the set of tags to remove
             if tag not in tags_to_remove_set:
                 filtered_tags.append(tag)
 
-        #  4. Join the remaining tags back into a single string
+        # 4. Join the remaining tags back into a single string
         filtered_tags_output = ", ".join(filtered_tags)
 
         return (filtered_tags_output,)

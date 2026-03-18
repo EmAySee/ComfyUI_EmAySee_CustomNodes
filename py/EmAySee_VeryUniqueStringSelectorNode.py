@@ -14,17 +14,17 @@ class EmAySee_StringSelectorNode:
 
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("SELECTED_STRING",)
-    CATEGORY = "EmAySee_Utils" #  Or a category you prefer
+    CATEGORY = "EmAySee_Utils" # Or a category you prefer
 
-    FUNCTION = "EmAySee_function"  #  <-- IMPORTANT: Back to string for FUNCTION
+    FUNCTION = "EmAySee_function"  # <-- IMPORTANT: Back to string for FUNCTION
 
-    def EmAySee_function(self, string_input_1, string_input_2, select_input): #  Ensure defined AFTER FUNCTION is set
+    def EmAySee_function(self, string_input_1, string_input_2, select_input): # Ensure defined AFTER FUNCTION is set
         if select_input == "string_input_1":
             return (string_input_1,)
         elif select_input == "string_input_2":
             return (string_input_2,)
         else:
-            return ("",) #  Should not happen, but default to empty string
+            return ("",) # Should not happen, but default to empty string
 
 NODE_CLASS_MAPPINGS = {
     "EmAySee_VeryUniqueStringSelectorNode": EmAySee_StringSelectorNode

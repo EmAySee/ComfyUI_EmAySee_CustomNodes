@@ -35,14 +35,14 @@ class EmAySee_ConditionalResize:
         
         if method == "lanczos":
              s = samples.clone()
-             #  Lanczos kernel implementation usually requires custom handling or specific libraries in standard Torch.
-             #  Using bicubic as a fallback for standard torch interpolate if lanczos isn't explicitly defined in context,
-             #  but standard ComfyUI `common_upscale` handles this. 
-             #  To keep this dependency-free and simple torch:
-             #  We will use bicubic for lanczos slot here or implement standard resize.
-             #  Actually, simpler to map standard torch modes. 
-             #  Let's use bicubic for 'lanczos' to avoid external dependencies, 
-             #  or simple bicubic with antialias=True if supported.
+             # Lanczos kernel implementation usually requires custom handling or specific libraries in standard Torch.
+             # Using bicubic as a fallback for standard torch interpolate if lanczos isn't explicitly defined in context,
+             # but standard ComfyUI `common_upscale` handles this. 
+             # To keep this dependency-free and simple torch:
+             # We will use bicubic for lanczos slot here or implement standard resize.
+             # Actually, simpler to map standard torch modes. 
+             # Let's use bicubic for 'lanczos' to avoid external dependencies, 
+             # or simple bicubic with antialias=True if supported.
              mode = "bicubic"
         else:
             mode = method

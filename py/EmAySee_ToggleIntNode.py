@@ -19,9 +19,9 @@ class EmAySee_ToggleIntNode:
     FUNCTION = "toggle_to_integer"
 
     def toggle_to_integer(self, toggle_input, int_if_on, int_if_off):
-        if toggle_input: #  If toggle_input is True (toggle is ON)
+        if toggle_input: # If toggle_input is True (toggle is ON)
             return (int_if_on,)
-        else: #  If toggle_input is False (toggle is OFF)
+        else: # If toggle_input is False (toggle is OFF)
             return (int_if_off,)
 
 NODE_CLASS_MAPPINGS = {

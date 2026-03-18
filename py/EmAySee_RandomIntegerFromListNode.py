@@ -32,7 +32,7 @@ class EmAySee_RandomIntegerFromListNode:
             return (selected_integer,)
         else:
             print("EmAySee Random Integer From List: No valid integers found in input string. Returning 0.")
-            return (0,) #  Or you could return (None,) if you prefer None when no valid integers
+            return (0,) # Or you could return (None,) if you prefer None when no valid integers
 
 NODE_CLASS_MAPPINGS = {
     "EmAySee_RandomIntegerFromListNode": EmAySee_RandomIntegerFromListNode

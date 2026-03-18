@@ -101,17 +101,17 @@ class EmAySee_SelectiveModelUnloader:
             gc.collect()
             comfy.model_management.soft_empty_cache()
             
-            #  Replicating the "Free model and node cache" button backend logic:
+            # Replicating the "Free model and node cache" button backend logic:
             if not exclude_checkpoints:
                 comfy.model_management.unload_all_models()
                 if hasattr(comfy.model_management, "loaded_models"):
                     comfy.model_management.loaded_models.clear()
             
-            #  Clear the execution cache (Node Cache)
+            # Clear the execution cache (Node Cache)
             if hasattr(comfy.model_management, "node_cache"):
                 comfy.model_management.node_cache.clear()
             
-            #  Brute force memory cleanup
+            # Brute force memory cleanup
             try:
                 comfy.model_management.cleanup_models(keep_free_mem=0)
             except:

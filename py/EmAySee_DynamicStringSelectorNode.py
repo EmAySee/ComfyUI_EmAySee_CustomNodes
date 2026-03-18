@@ -7,7 +7,7 @@ class EmAySee_DynamicStringSelectorNode:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
-            "string_input_1": ("STRING", {"default": "Initial Input"}), #  Added initial input
+            "string_input_1": ("STRING", {"default": "Initial Input"}), # Added initial input
             "select_index": ("INT", {"default": 1, "min": 1, "max": 1, "step": 1, "display": "slider", "label": "Select Input"}),
             "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
         }, "optional": {}}
@@ -20,7 +20,7 @@ class EmAySee_DynamicStringSelectorNode:
 
     @classmethod
     def IS_CHANGED(s, *args):
-        return float("nan") #  Never cache, so the node updates every time
+        return float("nan") # Never cache, so the node updates every time
 
     @classmethod
     def VALIDATE_INPUTS(s, select_index, seed, **kwargs):
@@ -31,7 +31,7 @@ class EmAySee_DynamicStringSelectorNode:
 
     def EmAySee_function(self, select_index, seed, **kwargs):
         if not kwargs:
-            return ("",)  #  No inputs connected
+            return ("",)  # No inputs connected
         random.seed(seed) #seed the random generator
         return (list(kwargs.values())[select_index - 1],)
 

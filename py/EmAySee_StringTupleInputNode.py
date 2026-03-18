@@ -17,8 +17,8 @@ class EmAySee_StringTupleInputNode:
     FUNCTION = "create_string_tuple"
 
     def create_string_tuple(self, string_list):
-        lines = string_list.strip().split('\n') #  Split multiline string into lines
-        string_tuple = tuple(line.strip() for line in lines) #  Create a tuple of strings, stripping whitespace from each line
+        lines = string_list.strip().split('\n') # Split multiline string into lines
+        string_tuple = tuple(line.strip() for line in lines) # Create a tuple of strings, stripping whitespace from each line
         return (string_tuple,)
 
 NODE_CLASS_MAPPINGS = {
