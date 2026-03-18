@@ -1,6 +1,6 @@
 [project]
 name = "ComfyUI_EmAySee_CustomNodes"
-description = "A specialized suite of over 60 custom nodes for ComfyUI. Includes advanced image processing (Qwen Pixel Aligner/Optimizer), VRAM management tools, masking logic, math expression evaluators, and high-performance LLM connectors with Auto-Continue. Amongst other fun, useful, and useless nodes TBH."
+description = "A Specialized suite of over 60 custom nodes for ComfyUI. Includes advanced image processing (Qwen Pixel Aligner/Optimizer), VRAM management tools, masking logic, math expression evaluators, and high-performance LLM connectors with Auto-Continue. Amongst other fun, useful, and useless nodes TBH."
 
 version = "4.1.0"
 license = {file = "LICENSE"}
