@@ -18,6 +18,7 @@ class EmAySee_SaveTextToFile:
     # Define RETURN_TYPES as an empty tuple since this node has no direct outputs
     # This is required by ComfyUI even for nodes without outputs.
     RETURN_TYPES = ()
+    OUTPUT_NODE = True
     # RETURN_NAMES = () # RETURN_NAMES is not strictly necessary if RETURN_TYPES is empty
 
     CATEGORY = "EmAySee_Utils" # Category in the ComfyUI menu
@@ -30,7 +31,7 @@ class EmAySee_SaveTextToFile:
         Saves the text content to a file in the specified subfolder.
         """
         # Get the base output directory for ComfyUI
-        output_dir = folder_paths.get_output_paths(None)[0] # Get the first output path
+        output_dir = folder_paths.output_directory # Get the first output path
 
         # Construct the full directory path
         if subfolder:
