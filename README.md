@@ -1,6 +1,4 @@
 ComfyUI_EmAySee_CustomNodes
-(NOT ALL LISTED YET,,,SORRY)
-
 This repository contains a collection of custom nodes for ComfyUI developed by EmAySee.
 
 **Currently AI Described these for me.. i'll update the descriptions later.
@@ -204,5 +202,4 @@ Here is a brief description of each custom node in this repository:
 
 
 Feel free to explore the code for each node for more details on their implementation.  Know before you go... Code provided without any garuntees or warranties or support.
-
 

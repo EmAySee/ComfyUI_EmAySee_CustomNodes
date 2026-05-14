@@ -1,104 +1,88 @@
 import os
-import time
-from PIL import Image, PngImagePlugin
-import numpy as np
-import folder_paths
 import json
-
+import torch
+import numpy as np
+from PIL import Image
+from PIL.PngImagePlugin import PngInfo
+from comfy.cli_args import args
+import folder_paths
 
 class EmAySee_SaveImage:
-    """
-    A custom ComfyUI node to save images with advanced filename customization.
-    """
-
     def __init__(self):
         self.output_dir = folder_paths.get_output_directory()
         self.type = "output"
+        self.prefix_append = ""
+        self.compress_level = 4
 
     @classmethod
-    def INPUT_TYPES(cls):
+    def INPUT_TYPES(s):
         return {
             "required": {
-                "images": ("IMAGE",),
-                "subfolder": ("STRING", {"default": ""}),
-                "name_postfix": ("STRING", {"default": "image_"}),
-                "timestamp_format": (["none", "YYYYMMDDHHMMSS"], {"default": "YYYYMMDDHHMMSS"}),  # Removed .f option
-                "name_prefix": ("STRING", {"default": ""}),
-                "separator": ("STRING", {"default": "_"}),
+                "images": ("IMAGE", ),
+                "filename_prefix": ("STRING", {"default": "ComfyUI"}),
+                "save_metadata": ("BOOLEAN", {"default": True}),
             },
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
         }
 
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("filepath",)
+    RETURN_TYPES = ()
     FUNCTION = "save_images"
     OUTPUT_NODE = True
-    CATEGORY = "EmAySee/Image"
+    CATEGORY = "EmAySee_Nodes/Image"
 
-    def save_images(self, images, subfolder="", name_postfix="image_", timestamp_format="YYYYMMDDHHMMSS", name_prefix="", separator="_", prompt=None, extra_pnginfo=None):
-        full_output_folder = os.path.join(self.output_dir, subfolder) if subfolder else self.output_dir
-
-        if not os.path.exists(full_output_folder):
-            os.makedirs(full_output_folder)
+    def save_images(self, images, filename_prefix="ComfyUI", save_metadata=True, prompt=None, extra_pnginfo=None):
+        filename_prefix += self.prefix_append
+        
+        is_absolute = os.path.isabs(filename_prefix) or ".." in filename_prefix or "/" in filename_prefix or "\\" in filename_prefix
+        
+        if is_absolute:
+            full_output_folder = os.path.dirname(filename_prefix)
+            if not os.path.exists(full_output_folder):
+                os.makedirs(full_output_folder, exist_ok=True)
+            filename = os.path.basename(filename_prefix)
+            subfolder = ""
+            
+            # Simple manual counter for absolute paths
+            files = os.listdir(full_output_folder)
+            existing_counters = []
+            for f in files:
+                if f.startswith(filename) and "_" in f:
+                    parts = f.split("_")
+                    for p in parts:
+                        if p.isdigit():
+                            existing_counters.append(int(p))
+            counter = max(existing_counters) + 1 if existing_counters else 1
+        else:
+            full_output_folder, filename, counter, subfolder, filename_prefix = folder_paths.get_save_image_path(filename_prefix, self.output_dir, images[0].shape[1], images[0].shape[0])
 
         results = list()
-        filepaths = list()
-
         for image in images:
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+            metadata = None
+            if save_metadata:
+                metadata = PngInfo()
+                if prompt is not None:
+                    metadata.add_text("prompt", json.dumps(prompt))
+                if extra_pnginfo is not None:
+                    for r in extra_pnginfo:
+                        metadata.add_text(r, json.dumps(extra_pnginfo[r]))
 
-            # --- Filename Construction ---
-            filename_parts = []
-
-            # Add name prefix (if provided)
-            if name_prefix:
-                filename_parts.append(name_prefix)
-
-            # Add timestamp (if selected)
-            if timestamp_format != "none":
-                if timestamp_format == "YYYYMMDDHHMMSS":
-                    timestamp = time.strftime("%Y%m%d%H%M%S")  # Keep only YYYYMMDDHHMMSS
-                # No else needed, as the only other option is "none"
-                filename_parts.append(timestamp)
-
-            # Add the base filename postfix
-            filename_parts.append(name_postfix)
-
-            # Join the parts with the separator
-            file_name = separator.join(filename_parts)
-            file = f"{file_name}"  # comfyui counter
-            file_path = os.path.join(full_output_folder, f"{file}.png")
-
-            filepaths.append(file_path)
-
-            # --- Metadata Handling ---
-            if extra_pnginfo is not None:
-                pnginfo = PngImagePlugin.PngInfo()
-                for k, v in extra_pnginfo.items():
-                    if isinstance(v, dict):
-                        v = json.dumps(v)
-                    elif not isinstance(v, str):
-                        v = str(v)
-                    pnginfo.add_text(k, v)
-            else:
-                pnginfo = None
-
-            img.save(file_path, pnginfo=pnginfo)
-
+            file = f"{filename}_{counter:05}_.png"
+            img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=self.compress_level)
             results.append({
-                "filename": f"{file}.png",
+                "filename": file,
                 "subfolder": subfolder,
                 "type": self.type
             })
+            counter += 1
 
-        return (filepaths, {"ui": { "images": results }})
-
+        return {"ui": {"images": results}}
 
 NODE_CLASS_MAPPINGS = {
     "EmAySee_SaveImage": EmAySee_SaveImage
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "EmAySee_SaveImage": "Save Image (EmAySee)"
+    "EmAySee_SaveImage": "EmAySee Save Image"
 }

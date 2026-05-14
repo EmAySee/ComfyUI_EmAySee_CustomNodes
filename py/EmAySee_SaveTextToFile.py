@@ -1,75 +1,58 @@
 import os
-import folder_paths # ComfyUI utility to get paths
+import folder_paths
 
 class EmAySee_SaveTextToFile:
-    """
-    Saves a string input to a text file with a specified filename and subfolder.
-    """
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
-                "text_to_save": ("STRING", {"multiline": True}), # The text content to save
-                "filename": ("STRING", {"default": "output_text"}), # The desired filename (without extension)
-                "subfolder": ("STRING", {"default": ""}), # Optional subfolder within the output directory
+                "text_to_save": ("STRING", {"multiline": True}),
+                "filename": ("STRING", {"default": "output_text"}),
+                "subfolder": ("STRING", {"default": ""}),
             }
         }
 
-    # Define RETURN_TYPES as an empty tuple since this node has no direct outputs
-    # This is required by ComfyUI even for nodes without outputs.
     RETURN_TYPES = ()
-    # RETURN_NAMES = () # RETURN_NAMES is not strictly necessary if RETURN_TYPES is empty
+    FUNCTION = "save_text"
+    OUTPUT_NODE = True
+    CATEGORY = "EmAySee/Utils"
 
-    CATEGORY = "EmAySee_Utils" # Category in the ComfyUI menu
-    TITLE = "EmAySee Save Text to File" # Title displayed on the node
-
-    FUNCTION = "EmAySee_save_text" # The method that will be executed
-
-    def EmAySee_save_text(self, text_to_save, filename, subfolder):
-        """
-        Saves the text content to a file in the specified subfolder.
-        """
-        # Get the base output directory for ComfyUI
-        output_dir = folder_paths.get_output_paths(None)[0] # Get the first output path
-
-        # Construct the full directory path
-        if subfolder:
-            save_dir = os.path.join(output_dir, subfolder)
+    def save_text(self, text_to_save, filename, subfolder):
+        if os.path.isabs(filename):
+            full_path_input = filename
+        elif subfolder.startswith("/") or (len(subfolder) > 1 and subfolder[1] == ":"):
+            full_path_input = os.path.join(subfolder, filename)
         else:
-            save_dir = output_dir
+            output_dir = folder_paths.get_output_directory()
+            full_path_input = os.path.join(output_dir, subfolder, filename)
 
-        # Ensure the directory exists, create if necessary
+        save_dir = os.path.dirname(full_path_input)
+        base_name = os.path.basename(full_path_input)
+
         os.makedirs(save_dir, exist_ok=True)
 
-        # Construct the full file path with .txt extension
-        # Sanitize filename to remove potentially problematic characters
-        safe_filename = "".join(c for c in filename if c.isalnum() or c in (' ', '_', '-')).rstrip()
+        if base_name.lower().endswith(".txt"):
+            base_name = base_name[:-4]
+
+        safe_filename = "".join(c for c in base_name if c.isalnum() or c in (' ', '.', '_', '-')).rstrip()
         if not safe_filename:
-             safe_filename = "output_text" # Fallback if filename becomes empty after sanitization
+            safe_filename = "output_text"
 
         file_path = os.path.join(save_dir, f"{safe_filename}.txt")
 
         try:
-            # Save the text content to the file
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(text_to_save)
-
-            print(f"Successfully saved text to: {file_path}")
-
-        except IOError as e:
-            print(f"Error saving text to file {file_path}: {e}")
+            print(f"[EmAySee] Successfully saved text to: {file_path}")
         except Exception as e:
-            print(f"An unexpected error occurred while saving text: {e}")
+            print(f"[EmAySee] CRITICAL Error saving text to {file_path}: {e}")
 
-        # This node doesn't return any specific output values, so return an empty tuple.
         return ()
 
-# Mapping of node class name to the class
 NODE_CLASS_MAPPINGS = {
     "EmAySee_SaveTextToFile": EmAySee_SaveTextToFile
 }
 
-# Mapping of node class name to the display name in the UI
 NODE_DISPLAY_NAME_MAPPINGS = {
     "EmAySee_SaveTextToFile": "EmAySee Save Text to File"
 }

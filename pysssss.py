@@ -298,4 +298,3 @@ def get_child_dir(root_dir, child_path, throw_if_outside=True):
         raise NotADirectoryError(
             "Saving outside the target folder is not allowed.")
     return None
-
